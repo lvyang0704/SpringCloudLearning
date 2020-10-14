@@ -1,0 +1,27 @@
+spring:
+  application:
+    name: zuul-proxy
+  cloud:
+    discovery:
+      client:
+        simple:
+          local:
+            uri: localhost
+server:
+  port: 8762
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone:  http://localhost:8761/eureka/
+  instance:
+    # 采用IP注册
+    preferIpAddress: true
+    # 定义实例ID格式
+    instance-id: ${spring.application.name}:${spring.cloud.discovery.client.simple.local.uri}:${server.port}
+
+zuul:
+  routes:
+    biancheng:
+      path: /biancheng/**
+      url: http://c.biancheng.net
